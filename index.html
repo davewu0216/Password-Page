@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>密碼驗證頁</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    input {
+      padding: 10px;
+      width: 200px;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      const correct = "since1976";
+      if (input === correct) {
+        window.location.href = "https://davewu0216.github.io/company-catalog/";
+      } else {
+        alert("密碼錯誤，請再試一次！");
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="box">
+    <h2>請輸入密碼</h2>
+    <input type="password" id="password" placeholder="輸入密碼">
+    <br>
+    <button onclick="checkPassword()">進入</button>
+  </div>
+</body>
+</html>
