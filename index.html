@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Password Protected</title>
   <style>
     body {
@@ -47,24 +47,18 @@
       if (input === correct) {
         window.location.href = "https://davewu0216.github.io/company-catalog/";
       } else {
-        alert("Incorrect password ｜ Falsches Passwort ｜ Contraseña incorrecta");
+        alert("Incorrect password. Please try again.");
       }
     }
   </script>
 </head>
 <body>
   <div class="box">
-    <h2>
-      Enter Password ｜ Passwort eingeben ｜ Ingresar contraseña
-    </h2>
-    <input type="password" id="password" placeholder="Password / Passwort / Contraseña">
-    <br>
-    <button onclick="checkPassword()">Enter ｜ Eintreten ｜ Entrar</button>
-    <p>
-      This page is password-protected. Please enter the password to continue.<br>
-      Diese Seite ist passwortgeschützt. Bitte geben Sie das Passwort ein, um fortzufahren.<br>
-      Esta página está protegida por contraseña. Por favor, introduzca la contraseña para continuar.
-    </p>
+    <h2>Enter Password</h2>
+    <input type="password" id="password" placeholder="Password" />
+    <br />
+    <button onclick="checkPassword()">Enter</button>
+    <p>This page is password protected. Please enter the correct password to continue.</p>
   </div>
 </body>
 </html>
