@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>密碼驗證頁</title>
+  <title>Password Protected</title>
   <style>
     body {
       font-family: sans-serif;
@@ -20,16 +20,24 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: center;
+      max-width: 400px;
     }
     input {
       padding: 10px;
-      width: 200px;
+      width: 100%;
       margin-top: 10px;
+      font-size: 16px;
     }
     button {
       margin-top: 15px;
       padding: 10px 20px;
+      font-size: 16px;
       cursor: pointer;
+    }
+    p {
+      font-size: 14px;
+      margin-top: 20px;
+      color: #444;
     }
   </style>
   <script>
@@ -39,17 +47,24 @@
       if (input === correct) {
         window.location.href = "https://davewu0216.github.io/company-catalog/";
       } else {
-        alert("密碼錯誤，請再試一次！");
+        alert("Incorrect password ｜ Falsches Passwort ｜ Contraseña incorrecta");
       }
     }
   </script>
 </head>
 <body>
   <div class="box">
-    <h2>請輸入密碼</h2>
-    <input type="password" id="password" placeholder="輸入密碼">
+    <h2>
+      Enter Password ｜ Passwort eingeben ｜ Ingresar contraseña
+    </h2>
+    <input type="password" id="password" placeholder="Password / Passwort / Contraseña">
     <br>
-    <button onclick="checkPassword()">進入</button>
+    <button onclick="checkPassword()">Enter ｜ Eintreten ｜ Entrar</button>
+    <p>
+      This page is password-protected. Please enter the password to continue.<br>
+      Diese Seite ist passwortgeschützt. Bitte geben Sie das Passwort ein, um fortzufahren.<br>
+      Esta página está protegida por contraseña. Por favor, introduzca la contraseña para continuar.
+    </p>
   </div>
 </body>
 </html>
