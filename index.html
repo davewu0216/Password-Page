@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Password Protected</title>
+  <title>Xcellent MFG E-Catalogue</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #f0f0f0;
       display: flex;
       flex-direction: column;
@@ -16,11 +16,11 @@
       margin: 0;
     }
     .logo {
-      max-width: 250px;
-      margin-bottom: 20px;
+      max-width: 220px;
+      margin-bottom: 25px;
     }
     .box {
-      background: white;
+      background: #ffffff;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -28,10 +28,10 @@
       max-width: 400px;
       width: 90%;
     }
-    h2 {
-      margin: 10px 0;
+    .title {
       font-size: 20px;
-      line-height: 1.4;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
     input {
       padding: 10px;
@@ -41,7 +41,7 @@
     }
     button {
       margin-top: 15px;
-      padding: 10px 20px;
+      padding: 10px 25px;
       font-size: 16px;
       cursor: pointer;
     }
@@ -64,14 +64,13 @@
   </script>
 </head>
 <body>
-  <img class="logo" src="Green with White Background.png" alt="Xcellent Logo">
+  <img src="logo.jpg" alt="Xcellent Logo" class="logo" />
   <div class="box">
-    <h2>
+    <div class="title">
       Xcellent MFG<br/>
-      E-Catalogue<br/>
-      <br/>
+      E-Catalogue<br/><br/>
       Enter Password
-    </h2>
+    </div>
     <input type="password" id="password" placeholder="Password" />
     <br />
     <button onclick="checkPassword()">Enter</button>
