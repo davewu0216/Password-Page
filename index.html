@@ -13,6 +13,11 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
+    }
+    .logo {
+      max-width: 250px;
+      margin-bottom: 30px;
     }
     .box {
       background: white;
@@ -21,6 +26,10 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: center;
       max-width: 400px;
+      width: 90%;
+    }
+    h2 {
+      margin-bottom: 20px;
     }
     input {
       padding: 10px;
@@ -53,8 +62,12 @@
   </script>
 </head>
 <body>
+  <img class="logo" src="Green with White Background.jpg" alt="Xcellent Logo">
   <div class="box">
-    <h2>Xcellent MFG E-Catalogue Enter Password</h2>
+    <h2>
+      Xcellent Manufacturing E-Catalogue<br/>
+      Enter Password
+    </h2>
     <input type="password" id="password" placeholder="Password" />
     <br />
     <button onclick="checkPassword()">Enter</button>
