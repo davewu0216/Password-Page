@@ -56,10 +56,21 @@
     }
   </style>
   <script>
+    function hash(input) {
+      let hash = 0;
+      for (let i = 0; i < input.length; i++) {
+        hash = (hash << 5) - hash + input.charCodeAt(i);
+        hash |= 0; // 轉為 32bit 整數
+      }
+      return hash;
+    }
+
     function checkPassword() {
-      const input = document.getElementById("password").value;
-      const correct = "since1976";
-      if (input === correct) {
+      const input = document.getElementById("password").value.trim();
+      const hashedInput = hash(input);
+      const correctHash = 509135548; // hash("since1976")
+
+      if (hashedInput === correctHash) {
         window.location.href = "https://davewu0216.github.io/company-catalog/";
       } else {
         alert("Incorrect password. Please try again.");
