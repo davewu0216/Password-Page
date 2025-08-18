@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,89 +8,122 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #f0f0f0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      height: 100vh; margin: 0;
     }
-    .logo {
-      max-width: 220px;
-      margin-bottom: 25px;
-    }
+    .logo { max-width: 220px; margin-bottom: 25px; }
     .box {
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
+      background: #ffffff; padding: 30px; border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center;
+      max-width: 400px; width: 90%;
     }
-    .title {
-      font-size: 20px;
-      margin-bottom: 5px;
-    }
-    .subtitle {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    input {
-      padding: 10px;
-      width: 100%;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 25px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    p {
-      font-size: 14px;
-      margin-top: 20px;
-      color: #444;
-    }
+    .title { font-size: 20px; margin-bottom: 5px; }
+    .subtitle { font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+    input { padding: 10px; width: 100%; margin-top: 10px; font-size: 16px; }
+    button { margin-top: 15px; padding: 10px 25px; font-size: 16px; cursor: pointer; }
+    p { font-size: 14px; margin-top: 20px; color: #444; }
   </style>
-  <script>
-    function hash(input) {
-      let hash = 0;
-      for (let i = 0; i < input.length; i++) {
-        hash = (hash << 5) - hash + input.charCodeAt(i);
-        hash |= 0; // 轉為 32bit 整數
-      }
-      return hash;
-    }
-
-    function checkPassword() {
-      const input = document.getElementById("password").value.trim();
-      const hashedInput = hash(input);
-      const correctHash = 509135548; 
-
-      if (hashedInput === correctHash) {
-        window.location.href = "https://davewu0216.github.io/company-catalog/";
-      } else {
-        alert("Incorrect password. Please try again.");
-      }
-    }
-  </script>
 </head>
 <body>
-  <img src="Green with White Background.png" alt="Xcellent Logo" class="logo" />
+  <!-- 如需 logo，可放檔案並啟用下一行 -->
+  <!-- <img src="Green with White Background.png" alt="Xcellent Logo" class="logo" /> -->
+
   <div class="box">
     <div class="title">Xcellent MFG.Assoc.Co. E-catalogue</div>
     <div class="subtitle">Enter Password</div>
-    <input type="password" id="password" placeholder="Password" />
-    <br />
-    <button onclick="checkPassword()">Enter</button>
+
+    <form onsubmit="event.preventDefault(); checkPassword();">
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password"/>
+      <button type="submit">Enter</button>
+    </form>
+
     <p>
       This page is password-protected.<br>
       Please contact us for access.<br>
       <a href="mailto:XcellentMFG@greenseasonstw.com.tw">XcellentMFG@greenseasonstw.com.tw</a>
     </p>
   </div>
+
+  <script>
+    // ===== PBKDF2 參數（已用  預先計算） =====
+    // salt: 16 bytes（hex），iterations: 300,000，輸出 256 bits
+    const KDF_PARAMS = {
+      alg: "PBKDF2",
+      hash: "SHA-256",
+      iter: 300000,
+      saltHex: "6212da5956b7cff205c82b4951e5aa4d",
+      expectedHex: "d77e18458c7b761de84540fde76e6281b04fe6b5d075f7f57af9de4c7f9567a5"
+    };
+
+    // ===== 目標跳轉網址（完整網址）=====
+    const TARGET_URL = "https://davewu0216.github.io/company-catalog/";
+
+    // ---------- 工具函式 ----------
+    function hexToBytes(hex) {
+      if (hex.length % 2 !== 0) throw new Error("Invalid hex");
+      const bytes = new Uint8Array(hex.length / 2);
+      for (let i = 0; i < bytes.length; i++) {
+        bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+      }
+      return bytes;
+    }
+
+    function toHex(buf) {
+      return [...new Uint8Array(buf)]
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    // 常數時間比較
+    function timingSafeEqual(a, b) {
+      if (a.length !== b.length) return false;
+      let diff = 0;
+      for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+      return diff === 0;
+    }
+
+    // 衍生 PBKDF2-HMAC-SHA-256
+    async function derivePBKDF2Hex(password, saltHex, iterations = 300000, lengthBits = 256) {
+      const enc = new TextEncoder();
+      const baseKey = await crypto.subtle.importKey(
+        "raw",
+        enc.encode(password),
+        { name: "PBKDF2" },
+        false,
+        ["deriveBits"]
+      );
+      const salt = hexToBytes(saltHex);
+      const bits = await crypto.subtle.deriveBits(
+        { name: "PBKDF2", hash: "SHA-256", salt, iterations },
+        baseKey,
+        lengthBits
+      );
+      return toHex(bits);
+    }
+
+    async function checkPassword() {
+      const input = document.getElementById("password").value.trim();
+      if (!input) { alert("Please enter password."); return; }
+
+      try {
+        // 計算使用者輸入的 KDF 結果
+        const derivedHex = await derivePBKDF2Hex(
+          input,
+          KDF_PARAMS.saltHex,
+          KDF_PARAMS.iter,
+          256
+        );
+
+        if (timingSafeEqual(derivedHex, KDF_PARAMS.expectedHex)) {
+          window.location.href = TARGET_URL;
+        } else {
+          alert("Incorrect password. Please try again.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Your browser may not support Web Crypto PBKDF2 in this context.");
+      }
+    }
+  </script>
 </body>
 </html>
